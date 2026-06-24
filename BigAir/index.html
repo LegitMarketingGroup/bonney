@@ -2664,7 +2664,7 @@ body.pe-mode #jtMapBox {
 
 /* ============= PHASE 4: Panel 8 (Territory & TAM) ============= */
 body.pe-mode #tamMapBay,
-body.pe-mode #tamMapOut-of-Area {
+body.pe-mode #tamMapOutArea {
   border: 1px solid var(--pe-hairline) !important;
   border-radius: var(--pe-radius) !important;
 }
@@ -4015,7 +4015,7 @@ img, svg, video, canvas { max-width: 100%; }
             <h2>Today: Live</h2>
             <div class="market-split-mini">
               <div><div class="mk">Bay Area</div><div class="vv" id="todayBayJobs">, </div><div class="ss">jobs scheduled</div></div>
-              <div><div class="mk">Out-of-Area</div><div class="vv" id="todayOut-of-AreaJobs">, </div><div class="ss">jobs scheduled</div></div>
+              <div><div class="mk">Out-of-Area</div><div class="vv" id="todayOutAreaJobs">, </div><div class="ss">jobs scheduled</div></div>
             </div>
             <div class="trade-mini">
               <div class="ti hvac"><b id="todayHVAC">, </b>HVAC</div>
@@ -4031,7 +4031,7 @@ img, svg, video, canvas { max-width: 100%; }
             <div style="margin-top:8px;">
               <div class="standup-row"><span class="lbl">Active tech roster</span><span class="val" id="techsActive">, </span></div>
               <div class="standup-row"><span class="lbl">Bay Area techs</span><span class="val" id="techsBay">, </span></div>
-              <div class="standup-row"><span class="lbl">Out-of-Area techs</span><span class="val" id="techsOut-of-Area">, </span></div>
+              <div class="standup-row"><span class="lbl">Out-of-Area techs</span><span class="val" id="techsOutArea">, </span></div>
             </div>
           </div>
           <!-- YESTERDAY -->
@@ -4060,7 +4060,7 @@ img, svg, video, canvas { max-width: 100%; }
             <h2>Tomorrow: Booked</h2>
             <div class="market-split-mini">
               <div><div class="mk">Bay Area</div><div class="vv" id="tomBayJobs">, </div><div class="ss">confirmed</div></div>
-              <div><div class="mk">Out-of-Area</div><div class="vv" id="tomOut-of-AreaJobs">, </div><div class="ss">confirmed</div></div>
+              <div><div class="mk">Out-of-Area</div><div class="vv" id="tomOutAreaJobs">, </div><div class="ss">confirmed</div></div>
             </div>
             <div class="trade-mini">
               <div class="ti hvac"><b id="tomHVAC">, </b>HVAC</div>
@@ -4523,7 +4523,7 @@ img, svg, video, canvas { max-width: 100%; }
       <div class="chart-card">
         <h3>Out-of-Area ZIPs</h3>
         <div class="sub">946 / 950 / 951 ZIP prefixes | markers sized by Big Air activity, colored by Zillow ZHVI</div>
-        <div id="tamMapOut-of-Area" style="height:380px;border-radius:8px;overflow:hidden;border:1px solid var(--border);"></div>
+        <div id="tamMapOutArea" style="height:380px;border-radius:8px;overflow:hidden;border:1px solid var(--border);"></div>
       </div>
     </div>
 
@@ -4764,7 +4764,7 @@ img, svg, video, canvas { max-width: 100%; }
       <div class="dg-card">
         <h3>Need-Based Demand | Out-of-Area</h3>
         <div class="dg-subtitle">Top 8 non-branded service keywords. Volume = total searches per month.</div>
-        <div class="dg-table-wrap"><table id="dg-brandKwOut-of-Area" class="dg-table"><thead></thead><tbody></tbody></table></div>
+        <div class="dg-table-wrap"><table id="dg-brandKwOutArea" class="dg-table"><thead></thead><tbody></tbody></table></div>
       </div>
     </div>
 
@@ -5175,8 +5175,8 @@ const pctRaw = (n,d=1)=>(n).toFixed(d)+'%';
 const TRADE_COLORS={HVAC:'#1E5BC6',Plumbing:'#2563EB',Electrical:'#FFC72C',Handyman:'#7C3AED',Other:'#94A3B8'};
 // Market color discipline: HQ (Bay Area) = brand red. Expansion (Out-of-Area) = navy/teal so HQ vs Expansion reads at a glance.
 // Previously both were dark + the same family which made them visually indistinguishable.
-const MARKET_COLORS={Bay Area:'#1E5BC6',Out-of-Area:'#0E7C7B'};
-const MARKET_COLORS_FILL={Bay Area:'rgba(200,16,46,.10)',Out-of-Area:'rgba(14,124,123,.12)'};
+const MARKET_COLORS={'Bay Area':'#1E5BC6','Out-of-Area':'#0E7C7B'};
+const MARKET_COLORS_FILL={'Bay Area':'rgba(200,16,46,.10)','Out-of-Area':'rgba(14,124,123,.12)'};
 
 // ===== Data load =====
 // Use `var` (hoisted) instead of `let` because the auto-unlock at script-load
@@ -5424,7 +5424,7 @@ function buildPanel1(){
 
   // In Bay/Out-of-Area view: show ", " for the hidden market in the split blocks
   $('#todayBayJobs').textContent = (mktFilter==='Out-of-Area') ? ', ' : bayDailyJobs;
-  $('#todayOut-of-AreaJobs').textContent = (mktFilter==='Bay Area') ? ', ' : hiddmktDailyJobs;
+  $('#todayOutAreaJobs').textContent = (mktFilter==='Bay Area') ? ', ' : hiddmktDailyJobs;
   $('#todayHVAC').textContent=todayHVAC;
   $('#todayPLMB').textContent=todayPLMB;
   $('#todayELEC').textContent=todayELEC;
@@ -5433,7 +5433,7 @@ function buildPanel1(){
   // Tomorrow projection = same as Today's daily-average baseline (trailing-30 derived).
   // Previously multiplied by ×1.04 as a fake "growth bump"; that was synthetic.
   $('#tomBayJobs').textContent = (mktFilter==='Out-of-Area') ? ', ' : bayDailyJobs;
-  $('#tomOut-of-AreaJobs').textContent = (mktFilter==='Bay Area') ? ', ' : hiddmktDailyJobs;
+  $('#tomOutAreaJobs').textContent = (mktFilter==='Bay Area') ? ', ' : hiddmktDailyJobs;
   $('#tomHVAC').textContent = todayHVAC;
   $('#tomPLMB').textContent = todayPLMB;
   $('#tomELEC').textContent = todayELEC;
@@ -5443,10 +5443,10 @@ function buildPanel1(){
   const allTechs = data.techs.filter(t=>(t.years||[]).includes(latestYear));
   const techsTotal = allTechs.length;
   const techsBay = allTechs.filter(t=>t.market==='Bay Area').length;
-  const techsOut-of-Area = allTechs.filter(t=>t.market==='Out-of-Area').length;
+  const techsOutArea = allTechs.filter(t=>t.market==='Out-of-Area').length;
   $('#techsActive').textContent=`${techsTotal} active in ${latestYear}`;
   $('#techsBay').textContent=`${techsBay}`;
-  $('#techsOut-of-Area').textContent=`${techsOut-of-Area}`;
+  $('#techsOutArea').textContent=`${techsOutArea}`;
 
   // YESTERDAY metrics: from last month average
   const yRev = totalMonthRev/dayInMonth;
@@ -7222,16 +7222,16 @@ function buildKpiCharts(){
     labels.push(tr);
     let cur_c, cur_d;
     if(cwc){
-      cur_c = ((cwc.Bay Area||{})[tr]) || {count:0,total:0};
-      cur_d = ((cwc.Out-of-Area||{})[tr])     || {count:0,total:0};
+      cur_c = ((cwc['Bay Area']||{})[tr]) || {count:0,total:0};
+      cur_d = ((cwc['Out-of-Area']||{})[tr])     || {count:0,total:0};
     } else {
       cur_c = (data.cb_market_trade||[]).find(c=>c.market==='Bay Area'&&c.trade===tr) || {count:0,total:0};
       cur_d = (data.cb_market_trade||[]).find(c=>c.market==='Out-of-Area'&&c.trade===tr)     || {count:0,total:0};
     }
     bayData.push(cur_c.total ? (cur_c.count/cur_c.total*100) : 0);
     hiddmktData.push(cur_d.total ? (cur_d.count/cur_d.total*100) : 0);
-    const prior_c = cwp ? ((cwp.Bay Area||{})[tr]) || {count:0,total:0} : {count:0,total:0};
-    const prior_d = cwp ? ((cwp.Out-of-Area||{})[tr])     || {count:0,total:0} : {count:0,total:0};
+    const prior_c = cwp ? ((cwp['Bay Area']||{})[tr]) || {count:0,total:0} : {count:0,total:0};
+    const prior_d = cwp ? ((cwp['Out-of-Area']||{})[tr])     || {count:0,total:0} : {count:0,total:0};
     bayPrior.push(prior_c.total ? (prior_c.count/prior_c.total*100) : 0);
     hiddmktPrior.push(prior_d.total ? (prior_d.count/prior_d.total*100) : 0);
   });
@@ -8213,7 +8213,7 @@ function _plCellsFromDayWindow(side){
   const dw = (data._day_window && data._day_window[side]) || null;
   const trades = ['HVAC','Plumbing','Electrical'];
   const tradeShort = {HVAC:'HVAC', Plumbing:'PLMB', Electrical:'ELEC'};
-  const cells = {Bay Area:{},Out-of-Area:{}};
+  const cells = {'Bay Area':{},'Out-of-Area':{}};
   ['Bay Area','Out-of-Area'].forEach(m=>{
     trades.forEach(t=>{cells[m][t]={rev:0,mat:0,equip:0,labor:0,gm:0,modeled:false};});
   });
@@ -8259,7 +8259,7 @@ function _plCellsFromDayWindow(side){
 // monthly rollups for full prior months with _day_window for the current partial.
 function _plCellsForYTD(yearISO){
   const trades = ['HVAC','Plumbing','Electrical'];
-  const cells = {Bay Area:{},Out-of-Area:{}};
+  const cells = {'Bay Area':{},'Out-of-Area':{}};
   ['Bay Area','Out-of-Area'].forEach(m=>{trades.forEach(t=>{cells[m][t]={rev:0,mat:0,equip:0,labor:0,gm:0,modeled:false};});});
   const last = (data._day_window && data._day_window.last_data_day) || '';
   const curYM = last.slice(0,7);
@@ -8295,7 +8295,7 @@ function _plCellsForYTD(yearISO){
 // plus same calendar window of LY for the partial month: from _day_window.ly.
 function _plCellsForLYYTD(yearISO){
   const trades = ['HVAC','Plumbing','Electrical'];
-  const cells = {Bay Area:{},Out-of-Area:{}};
+  const cells = {'Bay Area':{},'Out-of-Area':{}};
   ['Bay Area','Out-of-Area'].forEach(m=>{trades.forEach(t=>{cells[m][t]={rev:0,mat:0,equip:0,labor:0,gm:0,modeled:false};});});
   const last = (data._day_window && data._day_window.last_data_day) || '';
   const curYM = last.slice(0,7);                 // e.g. 2026-05
@@ -9576,7 +9576,7 @@ function buildPanel8(){
   // Initialize maps. Containers are display:none until the user clicks the tab,
   // so Leaflet sees 0×0 here. We invalidateSize() in goTab(p8) when shown.
   tamMaps.bay = L.map('tamMapBay', {zoomControl:true, attributionControl:false}).setView([39.16, -84.50], 10);
-  tamMaps.hiddmkt = L.map('tamMapOut-of-Area', {zoomControl:true, attributionControl:false}).setView([39.76, -84.19], 10);
+  tamMaps.hiddmkt = L.map('tamMapOutArea', {zoomControl:true, attributionControl:false}).setView([39.76, -84.19], 10);
   ['bay','hiddmkt'].forEach(k=>{
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{maxZoom:18}).addTo(tamMaps[k]);
   });
@@ -10818,7 +10818,7 @@ function renderTamPanel(){
       </tr>`;
     }
     renderKwTable('dg-brandKwBay',  keywords.bay_keywords,  latestYm, lyYm);
-    renderKwTable('dg-brandKwOut-of-Area', keywords.hiddmkt_keywords, latestYm, lyYm);
+    renderKwTable('dg-brandKwOutArea', keywords.hiddmkt_keywords, latestYm, lyYm);
 
     // -- YoY comparison table (combined Bay + Out-of-Area, by month) --
     const yoyTbl = document.getElementById('dg-brandYoyTable');
@@ -11652,8 +11652,8 @@ function buildExecutiveBrief() {
 
   const mkHtml =
     mkCard('Combined Total', combined, combinedPrv, techsCombined, 'combined', 'Big Air') +
-    (mkAgg.Bay Area ? mkCard('Bay Area', mkAgg.Bay Area, mkAggPrv.Bay Area, techsByMk.Bay Area||0, 'bay', 'HQ Market') : '') +
-    (mkAgg.Out-of-Area ? mkCard('Out-of-Area', mkAgg.Out-of-Area, mkAggPrv.Out-of-Area, techsByMk.Out-of-Area||0, 'hiddmkt', 'Expansion') : '');
+    (mkAgg['Bay Area'] ? mkCard('Bay Area', mkAgg['Bay Area'], mkAggPrv['Bay Area'], techsByMk['Bay Area']||0, 'bay', 'HQ Market') : '') +
+    (mkAgg['Out-of-Area'] ? mkCard('Out-of-Area', mkAgg['Out-of-Area'], mkAggPrv['Out-of-Area'], techsByMk['Out-of-Area']||0, 'hiddmkt', 'Expansion') : '');
   document.getElementById('ebMarketRow').innerHTML = mkHtml || '<div style="color:var(--pe-ink-muted);">Market data unavailable.</div>';
 
   // 4. Data confidence
