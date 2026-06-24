@@ -12352,12 +12352,13 @@ function _phase5_addImplications() {
 .eb-thesis{display:none!important}
 .eb-hero-card:has(#ebGM),.eb-hero-card:has(#ebUtil),.eb-hero-card:has(#ebMember){display:none!important}
 #ebRevDelta{display:none!important}
+.eb-hero-card:has(#ebRev) .eb-implication{display:none!important}
 .eb-col-left>.eb-card{display:none!important}
 </style>
 <script>
 (function(){function hide(){try{
 ['ebGM','ebUtil','ebMember'].forEach(function(id){var e=document.getElementById(id);if(e){var c=e.closest('.eb-hero-card');if(c)c.style.display='none';}});
-var rd=document.getElementById('ebRevDelta');if(rd)rd.style.display='none';
+va
 document.querySelectorAll('.eb-col-left>.eb-card').forEach(function(c){c.style.display='none';});
 }catch(e){}}
 if(document.readyState!=='loading')hide();else document.addEventListener('DOMContentLoaded',hide);
