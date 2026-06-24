@@ -12354,15 +12354,21 @@ function _phase5_addImplications() {
 #ebRevDelta{display:none!important}
 .eb-hero-card:has(#ebRev) .eb-implication{display:none!important}
 .eb-col-left>.eb-card{display:none!important}
+.eb-mk-yoy,.eb-mk-vs{display:none!important}
 </style>
 <script>
 (function(){function hide(){try{
 ['ebGM','ebUtil','ebMember'].forEach(function(id){var e=document.getElementById(id);if(e){var c=e.closest('.eb-hero-card');if(c)c.style.display='none';}});
-va
+var rv=document.getElementById('ebRev');if(rv){var rc=rv.closest('.eb-hero-card');if(rc){var im=rc.querySelector('.eb-implication');if(im)im.style.display='none';}}
 document.querySelectorAll('.eb-col-left>.eb-card').forEach(function(c){c.style.display='none';});
+document.querySelectorAll('.eb-mk-stat').forEach(function(s){var l=(s.querySelector('.eb-mk-label')||{}).textContent||'';if(/GM ?%|margin|utiliz|member|gross profit/i.test(l))s.style.display='none';});
+document.querySelectorAll('.eb-mk-yoy,.eb-mk-vs').forEach(function(e){e.style.display='none';});
+document.querySelectorAll('.eb-card h3,.eb-col-right h3').forEach(function(h){if(/Operating priorities/i.test(h.textContent)){var c=h.closest('.eb-card');if(c)c.style.display='none';}});
 }catch(e){}}
 if(document.readyState!=='loading')hide();else document.addEventListener('DOMContentLoaded',hide);
-setTimeout(hide,1200);setTimeout(hide,3000);})();
+[800,1600,3000,5000,8000].forEach(function(t){setTimeout(hide,t);});
+var n=0,iv=setInterval(function(){hide();if(++n>20)clearInterval(iv);},700);
+})();
 </script>
 
 </body>
